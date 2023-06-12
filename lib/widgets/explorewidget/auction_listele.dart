@@ -157,7 +157,7 @@ class _ExploreListScreenState extends State<ExploreListScreen> {
                 child: _exploreList.isEmpty
                     ? Noimage()
                     : Image.network(
-                        _exploreList[0].image,
+                        _exploreList[index].image,
                         fit: BoxFit.contain,
                       ),
               ),

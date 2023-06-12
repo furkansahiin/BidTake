@@ -284,6 +284,7 @@ void showPriceModal(BuildContext context, int productId, double price) {
                 primary: appcolor,
               ),
               onPressed: () async {
+                var limitprice = 99999999.9;
                 if(priceController.text.isEmpty) {
                   Get.snackbar(
                     errorTitle,
@@ -297,7 +298,7 @@ void showPriceModal(BuildContext context, int productId, double price) {
                 else {
                   User? user = await RememberUserPrefs.readUserInfo();
                 double newPrice = double.parse(priceController.text);
-                if (newPrice > price) {
+                if (limitprice > newPrice && newPrice > price) {
                   getProductsAuction(productId, user!.userId, newPrice);
                 } else {
                   // Hata durumu için geri bildirim

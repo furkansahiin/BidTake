@@ -80,7 +80,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     } catch (e) {
       Get.snackbar(
         errorTitle,
-        errorproductlist,
+        erorHostNotFound,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: errorred,
         colorText: whiteColor,
@@ -163,7 +163,7 @@ Future<void> getProductsAuction() async {
     } catch (e) {
       Get.snackbar(
         errorTitle,
-        errorproductlist,
+        erorHostNotFound,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: errorred,
         colorText: whiteColor,

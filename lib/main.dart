@@ -1,5 +1,7 @@
 import 'package:bidtake/consts/consts.dart';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
+
 void main() async {
   runApp(const MyApp());
 }
@@ -7,6 +9,11 @@ void main() async {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
+   // İnternet bağlantısını kontrol eden fonksiyon
+  Future<bool> checkInternetConnection() async {
+    var connectivityResult = await Connectivity().checkConnectivity();
+    return connectivityResult != ConnectivityResult.none;
+  }
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
@@ -37,21 +44,44 @@ class MyApp extends StatelessWidget {
         // GetPage(name: '/notification', page: () => const NotificationFragments()),
         // GetPage(name: '/favorite', page: () => const FavoriteFragments()),
       ],
-      home: FutureBuilder(
-      future: RememberUserPrefs.readUserInfo(),
-      builder: (context, dataSnapShot) {
-        if (dataSnapShot.hasData) {
-        User? user = dataSnapShot.data;
-        if (user!.isAdmin == true) {
-          return AdminDashboardFragments();
-        } else {
-          return DashboardFragments();
-        }
-      } else {
-        return const splashScreen();
-      }
-      },
-    ),
+      home: FutureBuilder<bool>(
+        future: checkInternetConnection(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            bool isConnected = snapshot.data!;
+            if (isConnected) {
+              return FutureBuilder<User?>(
+                future: RememberUserPrefs.readUserInfo(),
+                builder: (context, dataSnapShot) {
+                  if (dataSnapShot.hasData) {
+                    User? user = dataSnapShot.data;
+                    if (user!.isAdmin == true) {
+                      return AdminDashboardFragments();
+                    } else {
+                      return DashboardFragments();
+                    }
+                  } else {
+                    return const splashScreen();
+                  }
+                },
+              );
+            } else {
+              return AlertDialog(
+                title: const Text("İnternet Bağlantısı Yok"),
+                content: const Text("İnternet bağlantınızı kontrol edin"),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(context),
+                    child: const Text("Tamam"),
+                  ),
+                ],
+              );
+            }
+          } else {
+            return const splashScreen();
+          }
+        },
+      ),
     );
   }
 }

@@ -65,6 +65,8 @@ dev_dependencies:
   # sayfalardaki sliderlar için kullanılır 
   carousel_slider: ^4.2.1
 
+  connectivity_plus: ^4.0.1
+
   # ads redirect
   # url_launcher: ^6.1.10
   # ürünlerin ve profil resimlerini çekmek ve ya yüklemek için kullanılır

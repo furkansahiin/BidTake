@@ -93,7 +93,7 @@ class _CategoryListScreenState extends State<CategoryListScreen> {
       }
     }
   } catch (e) {
-    Get.snackbar(errorTitle, errorproductlist,
+    Get.snackbar(errorTitle, erorHostNotFound,
         snackPosition: SnackPosition.BOTTOM,
         backgroundColor: errorred,
         colorText: whiteColor);
